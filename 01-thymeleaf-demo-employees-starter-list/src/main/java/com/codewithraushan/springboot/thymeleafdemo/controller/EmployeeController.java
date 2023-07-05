@@ -1,6 +1,7 @@
 package com.codewithraushan.springboot.thymeleafdemo.controller;
 
 import com.codewithraushan.springboot.thymeleafdemo.entity.Employee;
+import com.codewithraushan.springboot.thymeleafdemo.service.EmployeeService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
+	/*
+	REMOVE HARD CODE AND CONNECT WITH DATA BASE MYSQL
 	// load employee data
 
 	private List<Employee> theEmployees;
@@ -34,11 +37,21 @@ public class EmployeeController {
 		theEmployees.add(emp2);
 		theEmployees.add(emp3);
 	}
+*/
+
+	private EmployeeService employeeService;
+
+	public EmployeeController(EmployeeService theEmployeeService){
+		employeeService = theEmployeeService;
+	}
 
 	// add mapping for "/list"
 
 	@GetMapping("/list")
 	public String listEmployees(Model theModel) {
+
+		//get the employee from database
+		List<Employee> theEmployees = employeeService.findAll();
 
 		// add to the spring model
 		theModel.addAttribute("employees", theEmployees);
