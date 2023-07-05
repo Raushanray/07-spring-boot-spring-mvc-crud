@@ -5,10 +5,7 @@ import com.codewithraushan.springboot.thymeleafdemo.service.EmployeeService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +68,19 @@ public class EmployeeController {
 
 		return "employees/employee-form";
 
+	}
+
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("employeeId") int theId,Model theModel){
+
+		//get the employee from the service
+		Employee theEmployee = employeeService.findById(theId);
+
+		//set employee in the model to prepopulate the form
+		theModel.addAttribute("employee", theEmployee);
+
+		//send over to our form
+		return "employees/employee-form";
 	}
 
 	@PostMapping("/save")
